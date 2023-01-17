@@ -16,7 +16,7 @@ jobs:
     - name: Set Node.js 16.x
       uses: actions/setup-node@v3
       with:
-        node-version: 16.x
+        node-version: 16.16.0.
 
     - name: Run install
       uses: borales/actions-yarn@v4
@@ -26,12 +26,13 @@ jobs:
     - name: Run serve
       uses: borales/actions-yarn@v4
       with:
-        cmd: yarn run serve 
+        cmd: run serve 
 
     - name: Build production bundle
       uses: borales/actions-yarn@v4
       with:
-        cmd: yarn build:prod 
+        cmd: build:prod 
+
     - name: Test the app
       uses: borales/actions-yarn@v4
       with:
