@@ -22,6 +22,12 @@ jobs:
       uses: borales/actions-yarn@v4
       with:
         cmd: install 
+        
+    - name: Run serve
+      uses: borales/actions-yarn@v4
+      with:
+        cmd: yarn run serve 
+
     - name: Build production bundle
       uses: borales/actions-yarn@v4
       with:
