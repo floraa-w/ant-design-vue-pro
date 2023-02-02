@@ -40,7 +40,8 @@ jobs:
     
     - name: Set Docker tag
       id: tag
-      uses: ant-design-vue-pro/docker-tag-action@v4
+      uses: floraa-w/ant-design-vue-pro@v0.4.7
+
     
     - name: Build the Docker image
       run: |
