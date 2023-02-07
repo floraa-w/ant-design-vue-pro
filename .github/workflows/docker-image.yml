@@ -33,18 +33,29 @@ jobs:
       with:
         cmd: run build:preview 
         
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      with:
-          fetch-depth: 0
-    
-    - name: Set Docker tag
-      id: tag
-      uses: floraa-w/ant-design-vue-pro@v0.4.7
+    - name: what
+      run: echo floraa-w/ant-design-vue-pro:${GITHUB_REF##*/}
 
     
-    - name: Build the Docker image
-      run: |
-        echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
-        docker build -t ant-design-vue-pro:${{ steps.tag.outputs.docker-tag }} .
-        docker push ant-design-vue-pro:${{ steps.tag.outputs.docker-tag }}
+    - name: set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+   
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+         username: ${{ secrets.DOCKER_HUB_USERNAME }}
+         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+         context: ./docker
+         file: ./docker/Dockerfile
+         platforms: linux/amd64,linux/arm64,linux/386
+         push: true
+         tags: floraa-w/ant-design-vue-pro:${GITHUB_REF##*/}
+         build-args: |
+            BRANCH=${GITHUB_REF##*/}
