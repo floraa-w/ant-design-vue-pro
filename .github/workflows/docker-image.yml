@@ -4,7 +4,6 @@ on:
    push: 
       branches: [master, beta, develop] 
    
-
 jobs:
 
   build:
@@ -34,9 +33,6 @@ jobs:
       uses: borales/actions-yarn@v4
       with:
         cmd: run build:preview 
-        
-    - name: what
-      run: echo floraa-w/ant-design-vue-pro:${GITHUB_REF##*/}
 
     
     - name: set up QEMU
